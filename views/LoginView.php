@@ -6,21 +6,27 @@ class LoginView {
     public function mostrarLogin() {
         // Genera el formulario
         ?>
-        <h1>Iniciar Sesión</h1>
-        <form action="./index.php?controller=Login&action=procesarLogin" method="POST">
-            <label>Usuario:</label>
-            <input type="text" name="usuario">
-            <br>
-            <label>Contraseña:</label>
-            <input type="password" name="contrasena">
-            <br>
-            <input type="submit" value="Acceder">
-        </form>
+        <div class="contenedor__log">
+            <div class="login__box">
+                <h1 class="login__title fw-bold">Iniciar Sesión</h1>
+                <?php
+                if (isset($_GET["action"])) {
+                    if ($_GET["action"] == "procesarLogin") {
+                        echo '<p class="fw-bold text-danger">Usuario o contraseña incorrecto</p>';
+                    }
+                }
+                ?>
+                <form class="login__form" action="./index.php?controller=Login&action=procesarLogin" method="POST">
+                    <label>Usuario:</label>
+                    <input class="form__input" type="text" name="usuario" required>
+                    <br>
+                    <label>Contraseña:</label>
+                    <input class="form__input" type="password" name="contrasena" required>
+                    <br>
+                    <input class="form__button" type="submit" value="Entrar">
+                </form>
+            </div> 
+        </div>
         <?php
-    }
-
-    // Muestra un mensaje de error
-    public function mostrarError($mensaje) {
-        echo '<p>Error: ' . $mensaje . '</p>';
     }
 }

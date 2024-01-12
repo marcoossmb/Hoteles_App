@@ -20,12 +20,19 @@ class LoginModel {
         $stmt->bindParam(':user', $user);
         $stmt->bindParam(':pass', $pass);
         $stmt->execute();
-        
+
         if ($stmt->rowCount() > 0) {
-            echo 'hola';
+
+            // Si se encuentra el usuario, se crea un objeto Usuario y se establecen cookies y sesiones
+            foreach ($stmt as $row) {
+                $nuevouser = new Usuario($row['id'], $row["nombre"], $row["contraseña"], $row["fecha_registro"], $row["rol"]);
+            }
+            session_start();
+            $_SESSION['nombre'] = $nuevouser->getNombre();
+            $_SESSION['rol'] = $nuevouser->getRol();
+            return true;
         } else {
-            header("Location: ./index.php?error");
+            return false;
         }
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
