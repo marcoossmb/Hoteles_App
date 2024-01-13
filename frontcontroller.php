@@ -7,9 +7,11 @@ include 'models/HotelesModel.php';
 
 include 'views/LoginView.php';
 include 'views/HotelesView.php';
+include 'views/HabitacionesView.php';
 
 include './lib/usuario.php';
 include './lib/hotel.php';
+include './lib/habitacion.php';
 
 // Define la acción por defecto
 define('ACCION_DEFECTO', 'mostrar');

@@ -92,3 +92,26 @@ body{
 .header__link:hover {
     background-color: #5C2E00;
 }
+
+td {
+    text-align: center;
+}
+
+th {
+    text-align: center;
+}
+
+.box__img {
+    width: 15%;
+    height: 100px;
+    overflow: hidden;
+}
+
+.table__img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.text-justify {
+    text-align: justify;
+}
