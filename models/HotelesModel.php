@@ -28,7 +28,12 @@ class HotelesModel {
     }
 
     public function getDetalles() {
-        $stmt = $this->pdo->prepare('SELECT * FROM habitaciones WHERE id_hotel = ' . $_GET["hotel"]);
+        // Consulta SQL con LEFT JOIN y filtro IS NULL
+        $sql = 'SELECT h.*, hab.* FROM hoteles h JOIN habitaciones hab ON h.id = hab.id_hotel 
+                LEFT JOIN reservas r ON hab.id = r.id_habitacion WHERE r.id_habitacion IS NULL AND h.id = :hotel_id';
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':hotel_id', $_GET["hotel"], PDO::PARAM_INT);
         $stmt->execute();
 
         $habitacionDetalle = [];
@@ -36,7 +41,13 @@ class HotelesModel {
             $habitacionDetalle[] = new Habitacion($row['id'], $row['id_hotel'], $row['num_habitacion'], $row['tipo'], $row['precio'], $row['descripcion']);
         }
 
-        $stmt2 = $this->pdo->prepare('SELECT * FROM hoteles WHERE id = ' . $_GET["hotel"]);
+        if (empty($habitacionDetalle)) {
+            header("Location: ./index.php?controller=Hoteles&action=mostrarNoDisponible");
+        }
+
+        // Obtener detalles del hotel
+        $stmt2 = $this->pdo->prepare('SELECT * FROM hoteles WHERE id = :hotel_id');
+        $stmt2->bindParam(':hotel_id', $_GET["hotel"], PDO::PARAM_INT);
         $stmt2->execute();
 
         $hoteles = [];
@@ -44,10 +55,6 @@ class HotelesModel {
             $hoteles[] = new Hotel($row2['id'], $row2['nombre'], $row2['direccion'], $row2['ciudad'], $row2['pais'], $row2['num_habitaciones'], $row2['descripcion'], $row2['foto']);
         }
 
-        if ($stmt2->rowCount() == 0) {
-            header("Location: ./index.php?controller=Hoteles&action=mostrarNoDisponible");
-        }
-        
         return array("habitacionDetalle" => $habitacionDetalle, "hoteles" => $hoteles);
     }
 }

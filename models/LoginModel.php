@@ -30,6 +30,7 @@ class LoginModel {
             session_start();
             $_SESSION['nombre'] = $nuevouser->getNombre();
             $_SESSION['rol'] = $nuevouser->getRol();
+            $_SESSION['id'] = $nuevouser->getId();
             return true;
         } else {
             return false;

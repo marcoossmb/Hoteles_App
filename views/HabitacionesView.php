@@ -6,7 +6,7 @@ class HabitacionesView {
         $habitacionDetalle = $detalles["habitacionDetalle"];
         $hoteles = $detalles["hoteles"];
         ?>
-        <div class="contenedor">
+        <div class="contenedor mt-2">
             <div class="header">
                 <h1 class="fw-bold">Hotel <?php echo $_GET["hotel"] ?></h1>
                 <div>
@@ -26,7 +26,7 @@ class HabitacionesView {
                     <?php
                 }
                 ?>
-                <h2 class="fw-bold mt-5">Habitaciones:</h2>
+                <h2 class="fw-bold mt-5">Habitaciones Disponibles:</h2>                                               
                 <table class="table">
                     <thead>
                         <tr>
@@ -42,7 +42,13 @@ class HabitacionesView {
                             <tr>
                                 <td><?php echo $detalle->getTipo(); ?></td>  
                                 <td><?php echo $detalle->getDescripcion(); ?></td>
-                                <td><?php echo $detalle->getPrecio(); ?> €</td> 
+                                <td><?php echo $detalle->getPrecio(); ?> €</td>
+                                <?php
+                                if ($_SESSION["rol"] == 0) {
+                                    $url_reservar = "./index.php?controller=Reservas&action=reservarHabitacion&id_hotel=" . $_GET['hotel'] . "&id_habitacion=" . $detalle->getId() . "&fecha_entrada=" . date("Y-m-d") . "&fecha_salida=" . date("Y-m-d", strtotime("+1 day"));
+                                    echo '<td><a href="'.$url_reservar.'" class="most__link">⬅️ Reservar</a></td>';
+                                }
+                                ?>
                             </tr>
                             <?php
                         }

@@ -7,11 +7,23 @@ class HotelesView {
         ?>
         <div class="contenedor">
             <div class="header">
-                <h1 class="fw-bold">Bienvenido/a <?php echo ucfirst($_SESSION['nombre']) ?></h1>                
-                <a href="./index.php?controller=Login&action=cerrarSesion" class="header__link">Cerrar Sesión</a>
+                <h1 class="fw-bold">Bienvenido/a <?php echo ucfirst($_SESSION['nombre']) ?></h1>
+                <div>
+                    <?php
+                    if ($_SESSION["rol"] == 1) {
+                        echo '<a href="./index.php?controller=Reservas&action=mostrar" class="header__link">Ver Reservas</a>';
+                    }
+                    ?>
+                    <a href="./index.php?controller=Login&action=cerrarSesion" class="header__link">Cerrar Sesión</a>
+                </div>                
             </div>
             <div class="main p-3">
                 <h2 class="mb-5">Hoteles Disponibles</h2>
+                <?php
+                if (isset($_GET['reserva'])) {
+                    echo '<p class="text-success">Reserva realizada correctamente</p>';
+                }
+                ?> 
                 <table class="table">
                     <thead>
                         <tr>
@@ -32,7 +44,7 @@ class HotelesView {
                                 <td><?php echo $hotel->getPais(); ?></td>
                                 <td><?php echo $hotel->getCiudad(); ?></td>
                                 <td><?php echo $hotel->getNum_habitaciones(); ?></td>
-                                <td><a href="./index.php?controller=Hoteles&action=detalles&hotel=<?php echo $hotel->getId(); ?>">Ver detalles</a></td>
+                                <td><a class="most__link" href="./index.php?controller=Hoteles&action=detalles&hotel=<?php echo $hotel->getId(); ?>">⬅️ ️Ver detalles</a></td>
                             </tr>
                             <?php
                         }
@@ -55,7 +67,7 @@ class HotelesView {
                 </div>
             </div>
             <div class="main p-3">
-                <h2 class="mb-5 text-center">Hotel seleccionado no disponible</h2>                
+                <h2 class="mb-5 text-center">Hotel seleccionado no disponible o sin habitaciones</h2>                
             </div>            
         </div>
         <?php

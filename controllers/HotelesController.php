@@ -29,6 +29,10 @@ class HotelesController {
         if (!$_SESSION["nombre"]) {
             header("Location: ./index.php?controller=Login&action=mostrar");
         }
+        
+        if (!$_GET["hotel"]) {
+            header("Location: ./index.php?controller=Hoteles&action=mostrar");
+        }
 
         $detalles = $this->model->getDetalles();
 
