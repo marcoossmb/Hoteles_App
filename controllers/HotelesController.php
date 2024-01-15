@@ -37,7 +37,7 @@ class HotelesController {
         $detalles = $this->model->getDetalles();
 
         $this->view->mostrarDetalles($detalles);
-    }
+    }    
     
     public function mostrarNoDisponible() {
         session_start();

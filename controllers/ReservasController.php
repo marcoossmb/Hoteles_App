@@ -38,6 +38,5 @@ class ReservasController {
         $this->model->postReservas();
         
         header("Location: ./index.php?controller=Hoteles&action=mostrar&reserva=check");
-    }
-    
+    }  
 }

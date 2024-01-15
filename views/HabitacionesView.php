@@ -37,7 +37,7 @@ class HabitacionesView {
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($habitacionDetalle as $detalle) {
+                        foreach ($habitacionDetalle as $index => $detalle) {
                             ?>
                             <tr>
                                 <td><?php echo $detalle->getTipo(); ?></td>  
@@ -45,8 +45,26 @@ class HabitacionesView {
                                 <td><?php echo $detalle->getPrecio(); ?> €</td>
                                 <?php
                                 if ($_SESSION["rol"] == 0) {
-                                    $url_reservar = "./index.php?controller=Reservas&action=reservarHabitacion&id_hotel=" . $_GET['hotel'] . "&id_habitacion=" . $detalle->getId() . "&fecha_entrada=" . date("Y-m-d") . "&fecha_salida=" . date("Y-m-d", strtotime("+1 day"));
-                                    echo '<td><a href="'.$url_reservar.'" class="most__link">⬅️ Reservar</a></td>';
+                                    $url_reservar = "./index.php?controller=Reservas&action=reservarHabitacion&id_hotel=" . $_GET['hotel'] . "&id_habitacion=" . $detalle->getId();
+                                    $id_capa = "miCapa_" . $index;
+                                    $fechaactual = date("Y-m-d",);
+                                    $fechaManana = date("Y-m-d", strtotime($fechaactual . ' +1 day'));
+                                    echo '<td>
+                                            <a data-toggle="collapse" href="#' . $id_capa . '" class="most__link">⬅️ Reservar</a>
+                                            <div class="mt-3 collapse" id="' . $id_capa . '">
+                                                <form action="' . $url_reservar . '" method="POST">
+                                                    <div class="mb-3">
+                                                        <label>Fecha de Entrada:</label>
+                                                        <input type="date" min="'.$fechaactual.'" id="fecha_entrada" name="fecha_entrada" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label>Fecha de Salida:</label>
+                                                        <input type="date" min="'.$fechaManana.'" id="fecha_salida" name="fecha_salida" required>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary">Reservar</button>
+                                                </form>
+                                            </div>
+                                        </td>';
                                 }
                                 ?>
                             </tr>

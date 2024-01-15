@@ -28,12 +28,15 @@ class HotelesModel {
     }
 
     public function getDetalles() {
+        $fechaactual = date("Y-m-d");        
+
         // Consulta SQL con LEFT JOIN y filtro IS NULL
-        $sql = 'SELECT h.*, hab.* FROM hoteles h JOIN habitaciones hab ON h.id = hab.id_hotel 
-                LEFT JOIN reservas r ON hab.id = r.id_habitacion WHERE r.id_habitacion IS NULL AND h.id = :hotel_id';
+        $sql = "SELECT h.*, hab.*, r.fecha_salida FROM hoteles h JOIN habitaciones hab ON h.id = hab.id_hotel 
+                LEFT JOIN reservas r ON hab.id = r.id_habitacion WHERE r.fecha_salida < :fechaactual AND h.id = :hotel_id";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':hotel_id', $_GET["hotel"], PDO::PARAM_INT);
+        $stmt->bindParam(':fechaactual', $fechaactual, PDO::PARAM_STR);
         $stmt->execute();
 
         $habitacionDetalle = [];

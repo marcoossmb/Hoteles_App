@@ -42,5 +42,5 @@ class ReservasView {
             </div>
         </div>
         <?php
-    }
+    }   
 }

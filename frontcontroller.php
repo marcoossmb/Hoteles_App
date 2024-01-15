@@ -12,10 +12,10 @@ include 'views/HotelesView.php';
 include 'views/HabitacionesView.php';
 include 'views/ReservasView.php';
 
-include './lib/usuario.php';
-include './lib/hotel.php';
-include './lib/habitacion.php';
-include './lib/reserva.php';
+include 'models/Usuario.php';
+include 'models/Hotel.php';
+include 'models/Habitacion.php';
+include 'models/Reserva.php';
 
 // Define la acción por defecto
 define('ACCION_DEFECTO', 'mostrar');

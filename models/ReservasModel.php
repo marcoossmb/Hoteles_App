@@ -40,8 +40,8 @@ class ReservasModel {
         $stmt->bindParam(':id_usuario', $_SESSION['id']);
         $stmt->bindParam(':id_hotel', $_GET['id_hotel']);
         $stmt->bindParam(':id_habitacion', $_GET['id_habitacion']);
-        $stmt->bindParam(':fecha_entrada', $_GET['fecha_entrada']);
-        $stmt->bindParam(':fecha_salida', $_GET['fecha_salida']);
+        $stmt->bindParam(':fecha_entrada', $_POST['fecha_entrada']);
+        $stmt->bindParam(':fecha_salida', $_POST['fecha_salida']);
 
         $stmt->execute();
         
