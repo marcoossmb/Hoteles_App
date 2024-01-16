@@ -18,12 +18,7 @@ class HotelesView {
                 </div>                
             </div>
             <div class="main p-3">
-                <h2 class="mb-5">Hoteles Disponibles</h2>
-                <?php
-                if (isset($_GET['reserva'])) {
-                    echo '<p class="text-success">Reserva realizada correctamente</p>';
-                }
-                ?> 
+                <h2 class="mb-5">Hoteles Disponibles</h2>                
                 <table class="table">
                     <thead>
                         <tr>

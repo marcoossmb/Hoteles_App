@@ -28,23 +28,45 @@ class ReservasModel {
     }
 
     public function postReservas() {
-        $sqlId = $this->pdo->prepare('SELECT MAX(id) AS id FROM reservas;');
-        $sqlId->execute();
 
-        $id = $sqlId->fetchColumn() + 1;
+        if ($_POST['fecha_entrada'] > $_POST['fecha_salida']) {
+            header("Location: ./index.php?controller=Hoteles&action=detalles&hotel=" . $_GET['id_hotel'] . "&reserva=error");
+            exit();
+        }
 
-        // Ejecuta una consulta para insertar una reservas
-        $stmt = $this->pdo->prepare('INSERT INTO reservas (id, id_usuario, id_hotel, id_habitacion, fecha_entrada, fecha_salida) VALUES (:id, :id_usuario, :id_hotel, :id_habitacion, :fecha_entrada, :fecha_salida);');
+        $sqlVerificacion = $this->pdo->prepare('SELECT COUNT(*) FROM reservas WHERE id_hotel = :id_hotel AND id_habitacion = :id_habitacion AND NOT (fecha_entrada >= :fecha_salida OR fecha_salida <= :fecha_entrada);');
 
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':id_usuario', $_SESSION['id']);
-        $stmt->bindParam(':id_hotel', $_GET['id_hotel']);
-        $stmt->bindParam(':id_habitacion', $_GET['id_habitacion']);
-        $stmt->bindParam(':fecha_entrada', $_POST['fecha_entrada']);
-        $stmt->bindParam(':fecha_salida', $_POST['fecha_salida']);
+        $sqlVerificacion->bindParam(':id_hotel', $_GET['id_hotel']);
+        $sqlVerificacion->bindParam(':id_habitacion', $_GET['id_habitacion']);
+        $sqlVerificacion->bindParam(':fecha_entrada', $_POST['fecha_entrada']);
+        $sqlVerificacion->bindParam(':fecha_salida', $_POST['fecha_salida']);
 
-        $stmt->execute();
-        
-        header("Location: ./index.php?controller=Hoteles&action=detalles&hotel=".$_GET['id_hotel']."&reserva=check");
+        $sqlVerificacion->execute();
+
+        $reservasExisten = $sqlVerificacion->fetchColumn();
+
+        if ($reservasExisten > 0) {
+            // Existen reservas para exactamente esas fechas en este hotel y habitación, muestra un error
+            header("Location: ./index.php?controller=Hoteles&action=detalles&hotel=" . $_GET['id_hotel'] . "&reserva=error");
+        } else {
+            $sqlId = $this->pdo->prepare('SELECT MAX(id) AS id FROM reservas;');
+            $sqlId->execute();
+
+            $id = $sqlId->fetchColumn() + 1;
+
+            // Ejecuta una consulta para insertar una reservas
+            $stmt = $this->pdo->prepare('INSERT INTO reservas (id, id_usuario, id_hotel, id_habitacion, fecha_entrada, fecha_salida) VALUES (:id, :id_usuario, :id_hotel, :id_habitacion, :fecha_entrada, :fecha_salida);');
+
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':id_usuario', $_SESSION['id']);
+            $stmt->bindParam(':id_hotel', $_GET['id_hotel']);
+            $stmt->bindParam(':id_habitacion', $_GET['id_habitacion']);
+            $stmt->bindParam(':fecha_entrada', $_POST['fecha_entrada']);
+            $stmt->bindParam(':fecha_salida', $_POST['fecha_salida']);
+
+            $stmt->execute();
+
+            header("Location: ./index.php?controller=Hoteles&action=detalles&hotel=" . $_GET['id_hotel'] . "&reserva=check");
+        }
     }
 }

@@ -26,7 +26,26 @@ class HabitacionesView {
                     <?php
                 }
                 ?>
-                <h2 class="fw-bold mt-5">Habitaciones Disponibles:</h2>                                               
+                <h2 class="fw-bold mt-5">Habitaciones Disponibles:</h2>
+                <?php
+                if (isset($_GET['reserva'])) {
+                    if ($_GET['reserva'] == 'check') {
+                        ?> 
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Reserva realizada correctamente</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <?php
+                    } else {
+                        ?> 
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Fechas elegidas no disponibles</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <?php
+                    }
+                }
+                ?> 
                 <table class="table">
                     <thead>
                         <tr>
@@ -55,11 +74,11 @@ class HabitacionesView {
                                                 <form action="' . $url_reservar . '" method="POST">
                                                     <div class="mb-3">
                                                         <label>Fecha de Entrada:</label>
-                                                        <input type="date" min="'.$fechaactual.'" id="fecha_entrada" name="fecha_entrada" required>
+                                                        <input type="date" min="' . $fechaactual . '" name="fecha_entrada" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label>Fecha de Salida:</label>
-                                                        <input type="date" min="'.$fechaManana.'" id="fecha_salida" name="fecha_salida" required>
+                                                        <input type="date" min="' . $fechaManana . '" name="fecha_salida" required>
                                                     </div>
                                                     <button type="submit" class="btn btn-primary">Reservar</button>
                                                 </form>
