@@ -2,10 +2,12 @@
 include 'controllers/LoginController.php';
 include 'controllers/HotelesController.php';
 include 'controllers/ReservasController.php';
+include 'controllers/HabitacionesController.php';
 
 include 'models/LoginModel.php';
 include 'models/HotelesModel.php';
 include 'models/ReservasModel.php';
+include 'models/HabitacionesModel.php';
 
 include 'views/LoginView.php';
 include 'views/HotelesView.php';

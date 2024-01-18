@@ -26,35 +26,4 @@ class HotelesModel {
         }
         return $hoteles;
     }
-
-    public function getDetalles() {
-
-        // Consulta para sacar los hoteles ysus respectivas habitaciones
-        $sql = "SELECT h.*, hab.* FROM habitaciones hab JOIN hoteles h ON hab.id_hotel = h.id WHERE h.id = :hotel_id;";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':hotel_id', $_GET["hotel"], PDO::PARAM_INT);
-        $stmt->execute();
-
-        $habitacionDetalle = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $habitacionDetalle[] = new Habitacion($row['id'], $row['id_hotel'], $row['num_habitacion'], $row['tipo'], $row['precio'], $row['descripcion']);
-        }
-
-        if (empty($habitacionDetalle)) {
-            header("Location: ./index.php?controller=Hoteles&action=mostrarNoDisponible");
-        }
-
-        // Obtener detalles del hotel
-        $stmt2 = $this->pdo->prepare('SELECT * FROM hoteles WHERE id = :hotel_id');
-        $stmt2->bindParam(':hotel_id', $_GET["hotel"], PDO::PARAM_INT);
-        $stmt2->execute();
-
-        $hoteles = [];
-        while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-            $hoteles[] = new Hotel($row2['id'], $row2['nombre'], $row2['direccion'], $row2['ciudad'], $row2['pais'], $row2['num_habitaciones'], $row2['descripcion'], $row2['foto']);
-        }
-
-        return array("habitacionDetalle" => $habitacionDetalle, "hoteles" => $hoteles);
-    }
 }

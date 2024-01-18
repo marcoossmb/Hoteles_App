@@ -39,7 +39,7 @@ class HotelesView {
                                 <td><?php echo $hotel->getPais(); ?></td>
                                 <td><?php echo $hotel->getCiudad(); ?></td>
                                 <td><?php echo $hotel->getNum_habitaciones(); ?></td>
-                                <td><a class="most__link" href="./index.php?controller=Hoteles&action=detalles&hotel=<?php echo $hotel->getId(); ?>">⬅️ ️Ver detalles</a></td>
+                                <td><a class="most__link" href="./index.php?controller=Habitaciones&action=detalles&hotel=<?php echo $hotel->getId(); ?>">⬅️ ️Ver detalles</a></td>
                             </tr>
                             <?php
                         }

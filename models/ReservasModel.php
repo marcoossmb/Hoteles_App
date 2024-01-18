@@ -17,14 +17,23 @@ class ReservasModel {
     // Recupera la lista de reservas
     public function getReservas() {
         // Ejecuta una consulta para recuperar todas las reservas
-        $stmt = $this->pdo->prepare('SELECT * FROM reservas');
+        $stmt = $this->pdo->prepare('SELECT * FROM reservas WHERE id_usuario=1');
         $stmt->execute();
 
-        $reservas = [];
+        $reservas1 = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $reservas[] = new Reserva($row['id'], $row['id_usuario'], $row['id_hotel'], $row['id_habitacion'], $row['fecha_entrada'], $row['fecha_salida']);
+            $reservas1[] = new Reserva($row['id'], $row['id_usuario'], $row['id_hotel'], $row['id_habitacion'], $row['fecha_entrada'], $row['fecha_salida']);
         }
-        return $reservas;
+        
+        $stmt2 = $this->pdo->prepare('SELECT * FROM reservas WHERE id_usuario=2');
+        $stmt2->execute();
+
+        $reservas2 = [];
+        while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+            $reservas2[] = new Reserva($row['id'], $row['id_usuario'], $row['id_hotel'], $row['id_habitacion'], $row['fecha_entrada'], $row['fecha_salida']);
+        }
+        
+        return array("reservas1" => $reservas1, "reservas2" => $reservas2);
     }
 
     public function postReservas() {
