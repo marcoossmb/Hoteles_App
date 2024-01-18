@@ -78,4 +78,17 @@ class ReservasModel {
             header("Location: ./index.php?controller=Hoteles&action=detalles&hotel=" . $_GET['id_hotel'] . "&reserva=check");
         }
     }
+    
+    public function getReservasDetalle() {
+        // Ejecuta una consulta para recuperar todas las reservas
+        $stmt = $this->pdo->prepare('SELECT * FROM reservas WHERE id='.$_GET['reserva']);
+        $stmt->execute();
+
+        $reservas = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $reservas[] = new Reserva($row['id'], $row['id_usuario'], $row['id_hotel'], $row['id_habitacion'], $row['fecha_entrada'], $row['fecha_salida']);
+        }
+        
+        return $reservas;
+    }
 }

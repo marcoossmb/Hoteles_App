@@ -37,5 +37,20 @@ class ReservasController {
         
         $this->model->postReservas();
         
-    }  
+    }
+    
+    public function mostrardetalles() {
+        session_start();
+        if (!$_SESSION["nombre"]) {
+            header("Location: ./index.php?controller=Login&action=mostrar");
+        }
+        
+        if ($_SESSION["rol"] == 0) {
+            header("Location: ./index.php?controller=Hoteles&action=mostrar");
+        }
+
+        $reservas = $this->model->getReservasDetalle();
+        
+        $this->view->detallesReserva($reservas);
+    }
 }
