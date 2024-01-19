@@ -39,7 +39,7 @@ class ReservasModel {
     public function postReservas() {
 
         if ($_POST['fecha_entrada'] > $_POST['fecha_salida']) {
-            header("Location: ./index.php?controller=Hoteles&action=detalles&hotel=" . $_GET['id_hotel'] . "&reserva=error");
+            header("Location: ./index.php?controller=Habitaciones&action=detalles&hotel=" . $_GET['id_hotel'] . "&reserva=error2");
             exit();
         }
 
@@ -56,7 +56,7 @@ class ReservasModel {
 
         if ($reservasExisten > 0) {
             // Existen reservas para exactamente esas fechas en este hotel y habitación, muestra un error
-            header("Location: ./index.php?controller=Hoteles&action=detalles&hotel=" . $_GET['id_hotel'] . "&reserva=error");
+            header("Location: ./index.php?controller=Habitaciones&action=detalles&hotel=" . $_GET['id_hotel'] . "&reserva=error1");
         } else {
             $sqlId = $this->pdo->prepare('SELECT MAX(id) AS id FROM reservas;');
             $sqlId->execute();
@@ -75,20 +75,29 @@ class ReservasModel {
 
             $stmt->execute();
 
-            header("Location: ./index.php?controller=Hoteles&action=detalles&hotel=" . $_GET['id_hotel'] . "&reserva=check");
+            header("Location: ./index.php?controller=Habitaciones&action=detalles&hotel=" . $_GET['id_hotel'] . "&reserva=check");
         }
     }
     
     public function getReservasDetalle() {
         // Ejecuta una consulta para recuperar todas las reservas
-        $stmt = $this->pdo->prepare('SELECT * FROM reservas WHERE id='.$_GET['reserva']);
+        $stmt = $this->pdo->prepare('SELECT * FROM reservas r JOIN hoteles h ON r.id_hotel=h.id JOIN habitaciones hab ON r.id_habitacion=hab.id WHERE r.id='.$_GET['reserva']);
         $stmt->execute();
 
         $reservas = [];
+        $hoteles = [];
+        $habitaciones = [];                
+        
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $reservas[] = new Reserva($row['id'], $row['id_usuario'], $row['id_hotel'], $row['id_habitacion'], $row['fecha_entrada'], $row['fecha_salida']);
+            $hoteles[] = new Hotel($row['id'], $row['nombre'], $row['direccion'], $row['ciudad'], $row['pais'], $row['num_habitaciones'], $row['descripcion'], $row['foto']);
+            $habitaciones[] = new Habitacion($row['id'], $row['id_hotel'], $row['num_habitacion'], $row['tipo'], $row['precio'], $row['descripcion']);
         }
         
-        return $reservas;
+        if (empty($reservas)) {
+            header("Location: ./index.php?controller=Reservas&action=mostrarNoDisponible");
+        }
+        
+        return array("reservas" => $reservas, "hoteles" => $hoteles, "habitaciones" => $habitaciones);
     }
 }

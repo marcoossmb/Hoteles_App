@@ -36,10 +36,17 @@ class HabitacionesView {
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         <?php
+                    } else if ($_GET['reserva'] == 'error1') {
+                        ?> 
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Fechas elegidas ya reservadas</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <?php
                     } else {
                         ?> 
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Fechas elegidas no disponibles</strong>
+                            <strong>No puedes elegir una fecha de entrada mayor a la de salida</strong>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         <?php

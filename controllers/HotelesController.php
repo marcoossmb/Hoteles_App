@@ -19,25 +19,7 @@ class HotelesController {
         $hoteles = $this->model->getHoteles();
 
         $this->view->mostrarHoteles($hoteles);
-    }
-
-    public function detalles() {
-        
-        $this->view = new HabitacionesView();
-        
-        session_start();
-        if (!$_SESSION["nombre"]) {
-            header("Location: ./index.php?controller=Login&action=mostrar");
-        }
-        
-        if (!$_GET["hotel"]) {
-            header("Location: ./index.php?controller=Hoteles&action=mostrar");
-        }
-
-        $detalles = $this->model->getDetalles();
-
-        $this->view->mostrarDetalles($detalles);
-    }    
+    }   
     
     public function mostrarNoDisponible() {
         session_start();

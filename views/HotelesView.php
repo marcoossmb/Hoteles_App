@@ -62,7 +62,9 @@ class HotelesView {
                 </div>
             </div>
             <div class="main p-3">
-                <h2 class="mb-5 text-center">Hotel seleccionado no disponible o sin habitaciones</h2>                
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <h2 class="text-center">Hotel seleccionado no disponible o sin habitaciones</h2>
+                </div>
             </div>            
         </div>
         <?php
