@@ -10,9 +10,9 @@ class DB {
             // Crea una instancia de PDO para conectarse a la base de datos
             $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $usuario, $pwd);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-           
         } catch (Exception $ex) {
-            echo $ex->getMessage();
+            header("Location: ./views/MantenimientoView.php");
+            exit;
         }
     }
 
@@ -20,5 +20,4 @@ class DB {
     public function getPDO() {
         return $this->pdo;
     }
-
 }

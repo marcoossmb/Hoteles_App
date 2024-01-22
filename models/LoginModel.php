@@ -9,8 +9,14 @@ class LoginModel {
     private $pdo;
 
     public function __construct() {
-        $this->bd = new DB();
-        $this->pdo = $this->bd->getPDO();
+
+        try {
+
+            $this->bd = new DB();
+            $this->pdo = $this->bd->getPDO();
+        } catch (Exception $exc) {
+            echo $exc->getMessage();
+        }
     }
 
     // Recupera la lista de tareas de la base de datos
