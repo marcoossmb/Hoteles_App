@@ -9,9 +9,14 @@
         <title>Hoteles • Marcos</title>
     </head>
     <body>
+        <!-- Contenedor principal -->
         <div class="contenedor">
+            <!-- Título de mantenimiento -->
             <h1 class="login__title fw-bold text-center">El servidor se encuentra en mantenimiento</h1>
+
+            <!-- Contenido del mantenimiento -->
             <div class="d-flex align-items-center justify-content-center flex-column">
+                <!-- Enlace para volver a la página principal -->
                 <a class="header__link" href="../index.php">Volver</a>
             </div> 
         </div>

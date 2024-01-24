@@ -1,4 +1,5 @@
-body{
+/* Estilo del cuerpo de la página */
+body {
     background-image: url(../assets/images/fondo.png);
     top: 0;
     left: 0;
@@ -8,6 +9,7 @@ body{
     font-family: "arial";
 }
 
+/* Estilo del contenedor del logotipo */
 .contenedor__log {
     margin: 0 auto;
     max-width: 1080px;
@@ -16,6 +18,7 @@ body{
     margin-top: 50px;
 }
 
+/* Estilo del contenedor principal */
 .contenedor {
     margin: 0 auto;
     max-width: 1080px;
@@ -29,6 +32,7 @@ body{
     border-radius: 8px;
 }
 
+/* Estilo de la caja de inicio de sesión */
 .login__box {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -39,11 +43,13 @@ body{
     margin: 0 auto;
 }
 
+/* Estilo del título de inicio de sesión */
 .login__title {
     margin-bottom: 20px;
     color: #333;
 }
 
+/* Estilo de los campos de entrada del formulario */
 .form__input {
     width: 100%;
     padding: 10px;
@@ -54,6 +60,7 @@ body{
     margin-top: 10px;
 }
 
+/* Estilo del botón del formulario */
 .form__button {
     background-color: #8B4513;
     color: #fff;
@@ -63,16 +70,19 @@ body{
     cursor: pointer;
 }
 
+/* Estilo de los campos de entrada del formulario al estar enfocados */
 .form__input:focus {
     border-color: #FDC38C;
     outline: none;
     box-shadow: 0px 0px 10px 1px #FDC38C;
 }
 
+/* Estilo del botón del formulario al pasar el ratón por encima */
 .form__button:hover {
     background-color: #5C2E00;
 }
 
+/* Estilo del encabezado de la página */
 .header {
     display: flex;
     justify-content: space-between;
@@ -81,6 +91,7 @@ body{
     padding: 10px 50px 0px 50px;
 }
 
+/* Estilo de los enlaces del encabezado */
 .header__link {
     text-decoration: none;
     color: white;
@@ -89,33 +100,40 @@ body{
     border-radius: 8px;
 }
 
+/* Estilo de los enlaces del encabezado al pasar el ratón por encima */
 .header__link:hover {
     background-color: #5C2E00;
 }
 
+/* Estilo de las celdas de la tabla */
 td {
     text-align: center;
 }
 
+/* Estilo de las cabeceras de la tabla */
 th {
     text-align: center;
 }
 
+/* Estilo del contenedor de la imagen */
 .box__img {
     width: 15%;
     height: 100px;
     overflow: hidden;
 }
 
+/* Estilo de la imagen de la tabla */
 .table__img {
     width: 100%;
     object-fit: cover;
 }
 
+/* Estilo de justificación de texto */
 .text-justify {
     text-align: justify;
 }
 
+/* Estilo de los enlaces de la mayoría */
 .most__link {
     text-decoration: none;
     color: #0078D7;

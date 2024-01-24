@@ -2,7 +2,7 @@
 
 class HotelesView {
 
-    // Muestra todos los hoteles
+    // Muestra la lista de hoteles junto con opciones según el rol del usuario
     public function mostrarHoteles($hoteles) {
         ?>
         <div class="contenedor">
@@ -10,6 +10,7 @@ class HotelesView {
                 <h1 class="fw-bold">Bienvenido/a <?php echo ucfirst($_SESSION['nombre']) ?></h1>
                 <div>
                     <?php
+                    // Verifica el rol del usuario y muestra enlaces según sea necesario
                     if ($_SESSION["rol"] == 1) {
                         echo '<a href="./index.php?controller=Reservas&action=mostrar" class="header__link">Ver Reservas</a>';
                     }
@@ -31,6 +32,7 @@ class HotelesView {
                     </thead>
                     <tbody>
                         <?php
+                        // Itera sobre la lista de hoteles y muestra sus detalles en una tabla
                         foreach ($hoteles as $hotel) {
                             ?>
                             <tr>
@@ -51,6 +53,7 @@ class HotelesView {
         <?php
     }
 
+    // Muestra un mensaje de alerta cuando el hotel seleccionado no está disponible o no tiene habitaciones
     public function mostrarNoDisponible() {
         ?>
         <div class="contenedor">
