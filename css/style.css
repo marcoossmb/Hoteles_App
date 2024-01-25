@@ -80,3 +80,12 @@ th {
     text-decoration: none;
     color: #0078D7;
 }
+
+.link__log {
+    color: #46AABA;
+}
+
+.btn__log {
+    background-color: #46AABA;
+    border: #46AABA;
+}
