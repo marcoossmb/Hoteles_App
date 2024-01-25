@@ -21,7 +21,7 @@ class ReservasController {
         if (!$_SESSION["nombre"]) {
             header("Location: ./index.php?controller=Login&action=mostrar");
         }
-        
+
         if ($_SESSION["rol"] == 0) {
             header("Location: ./index.php?controller=Hoteles&action=mostrar");
         }
@@ -30,7 +30,23 @@ class ReservasController {
 
         $this->view->mostrarReservas($reservas);
     }
-    
+
+    public function mostrarReservasUsu() {
+        session_start();
+
+        if (!$_SESSION["nombre"]) {
+            header("Location: ./index.php?controller=Login&action=mostrar");
+        }
+
+        if ($_SESSION["rol"] == 1) {
+            header("Location: ./index.php?controller=Hoteles&action=mostrar");
+        }
+
+        $reservas = $this->model->getReservasUsu();
+
+        $this->view->mostrarReservasUsu($reservas);
+    }
+
     /**
      * Realiza la reserva de una habitación si el usuario está autenticado y tiene el rol adecuado.
      * Redirige a la página de inicio de sesión si no está autenticado.
@@ -42,14 +58,14 @@ class ReservasController {
         if (!$_SESSION["nombre"]) {
             header("Location: ./index.php?controller=Login&action=mostrar");
         }
-        
+
         if ($_SESSION["rol"] == 1) {
             header("Location: ./index.php?controller=Hoteles&action=mostrar");
         }
-        
+
         $this->model->postReservas();
     }
-    
+
     /**
      * Muestra los detalles de una reserva si el usuario está autenticado y tiene el rol adecuado.
      * Redirige a la página de inicio de sesión si no está autenticado.
@@ -61,16 +77,16 @@ class ReservasController {
         if (!$_SESSION["nombre"]) {
             header("Location: ./index.php?controller=Login&action=mostrar");
         }
-        
+
         if ($_SESSION["rol"] == 0) {
             header("Location: ./index.php?controller=Hoteles&action=mostrar");
         }
 
         $detareservas = $this->model->getReservasDetalle();
-        
+
         $this->view->detallesReserva($detareservas);
     }
-    
+
     /**
      * Muestra una página indicando que la opción no está disponible si el usuario está autenticado y tiene el rol adecuado.
      * Redirige a la página de inicio de sesión si no está autenticado.
@@ -86,7 +102,7 @@ class ReservasController {
         if ($_SESSION["rol"] == 0) {
             header("Location: ./index.php?controller=Hoteles&action=mostrar");
         }
-        
+
         $this->view->mostrarNoDisponible();
     }
 }

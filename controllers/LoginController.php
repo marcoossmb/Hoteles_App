@@ -38,7 +38,7 @@ class LoginController {
 
             header("Location: ./index.php?controller=Hoteles&action=mostrar");
         } else {
-            $this->view->mostrarLogin();
+            header("Location: ./index.php?errorLog=true");
         }
     }
 

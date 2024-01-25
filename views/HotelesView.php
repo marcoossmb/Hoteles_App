@@ -13,6 +13,8 @@ class HotelesView {
                     // Verifica el rol del usuario y muestra enlaces según sea necesario
                     if ($_SESSION["rol"] == 1) {
                         echo '<a href="./index.php?controller=Reservas&action=mostrar" class="header__link">Ver Reservas</a>';
+                    } else {
+                        echo '<a href="./index.php?controller=Reservas&action=mostrarReservasUsu" class="header__link">Ver mis reservas</a>';
                     }
                     ?>
                     <a href="./index.php?controller=Login&action=cerrarSesion" class="header__link">Cerrar Sesión</a>

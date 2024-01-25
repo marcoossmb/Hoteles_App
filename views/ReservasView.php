@@ -144,13 +144,13 @@ class ReservasView {
                                 <td><?php echo $hotel->getNum_habitaciones(); ?></td>
                                 <td><?php echo $hotel->getDescripcion(); ?></td>
                                 <!-- Div para mostrar imagen del hotel -->
-                                <div class="d-flex justify-content-center">
-                                    <img class="w-25" src="data:image/jpeg;base64,<?php echo base64_encode($hotel->getFoto()); ?>" alt="">
-                                </div>
-                            </tr>
+                        <div class="d-flex justify-content-center">
+                            <img class="w-25" src="data:image/jpeg;base64,<?php echo base64_encode($hotel->getFoto()); ?>" alt="">
+                        </div>
+                        </tr>
                         <?php
-                        }
-                        ?>
+                    }
+                    ?>
                     </tbody>
                 </table>
 
@@ -177,7 +177,7 @@ class ReservasView {
                                 <td><?php echo $habitacion->getDescripcion(); ?></td>
                                 <td><?php echo $habitacion->getPrecio(); ?> €</td>
                             </tr>
-                        <?php
+                            <?php
                         }
                         ?>
                     </tbody>
@@ -211,6 +211,52 @@ class ReservasView {
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <h2 class="text-center">Reserva seleccionada no disponible o inexistente</h2>
                 </div>
+            </div>
+        </div>
+        <?php
+    }
+
+    public function mostrarReservasUsu($reservas) {
+        ?>
+        <!-- Contenedor principal -->
+        <div class="contenedor">
+            <!-- Encabezado con título y enlaces de navegación -->
+            <div class="header">
+                <h1 class="fw-bold">Reservas Realizadas</h1>
+                <div>
+                    <!-- Enlace para volver -->
+                    <a href="./index.php?controller=Hoteles&action=mostrar" class="header__link">Volver</a>
+                    <!-- Enlace para cerrar sesión -->
+                    <a href="./index.php?controller=Login&action=cerrarSesion" class="header__link">Cerrar Sesión</a>
+                </div>
+            </div>
+
+            <!-- Sección principal -->
+            <div class="main">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Hotel</th>
+                            <th>Habitación</th>
+                            <th>Fecha Entrada</th>
+                            <th>Fecha Salida</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($reservas as $reserva) {
+                            ?>
+                            <tr>
+                                <td><?php echo $reserva->getId_hotel(); ?></td>
+                                <td><?php echo $reserva->getId_habitacion(); ?></td>
+                                <td><?php echo $reserva->getFecha_entrada(); ?></td>
+                                <td><?php echo $reserva->getFecha_salida(); ?></td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
         <?php

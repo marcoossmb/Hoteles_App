@@ -31,7 +31,7 @@ class ReservasModel {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $reservas1[] = new Reserva($row['id'], $row['id_usuario'], $row['id_hotel'], $row['id_habitacion'], $row['fecha_entrada'], $row['fecha_salida']);
         }
-        
+
         // Consulta SQL para obtener reservas del segundo usuario
         $stmt2 = $this->pdo->prepare('SELECT * FROM reservas WHERE id_usuario=2');
         $stmt2->execute();
@@ -43,9 +43,26 @@ class ReservasModel {
         while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
             $reservas2[] = new Reserva($row['id'], $row['id_usuario'], $row['id_hotel'], $row['id_habitacion'], $row['fecha_entrada'], $row['fecha_salida']);
         }
-        
+
         // Retorna un array con las reservas para cada usuario
         return array("reservas1" => $reservas1, "reservas2" => $reservas2);
+    }
+
+    public function getReservasUsu() {
+        // Consulta SQL para obtener reservas del primer usuario
+        $stmt = $this->pdo->prepare('SELECT * FROM reservas WHERE id_usuario=' . $_SESSION['id']);
+        $stmt->execute();
+
+        // Inicializa un array para almacenar objetos Reserva
+        $reservas = [];
+
+        // Recorre los resultados y crea objetos Reserva con la información obtenida
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $reservas[] = new Reserva($row['id'], $row['id_usuario'], $row['id_hotel'], $row['id_habitacion'], $row['fecha_entrada'], $row['fecha_salida']);
+        }
+
+        // Retorna un array con las reservas para cada usuario
+        return $reservas;
     }
 
     /**
@@ -103,7 +120,7 @@ class ReservasModel {
             header("Location: ./index.php?controller=Habitaciones&action=detalles&hotel=" . $_GET['id_hotel'] . "&reserva=check");
         }
     }
-    
+
     /**
      * Obtiene detalles de una reserva específica.
      * Retorna un array con objetos Reserva, Hotel y Habitacion correspondientes.
@@ -111,26 +128,26 @@ class ReservasModel {
      */
     public function getReservasDetalle() {
         // Consulta SQL para obtener detalles de una reserva específica
-        $stmt = $this->pdo->prepare('SELECT * FROM reservas r JOIN hoteles h ON r.id_hotel=h.id JOIN habitaciones hab ON r.id_habitacion=hab.id WHERE r.id='.$_GET['reserva']);
+        $stmt = $this->pdo->prepare('SELECT * FROM reservas r JOIN hoteles h ON r.id_hotel=h.id JOIN habitaciones hab ON r.id_habitacion=hab.id WHERE r.id=' . $_GET['reserva']);
         $stmt->execute();
 
         // Inicializa arrays para almacenar objetos Reserva, Hotel y Habitacion
         $reservas = [];
         $hoteles = [];
-        $habitaciones = [];                
-        
+        $habitaciones = [];
+
         // Recorre los resultados y crea objetos Reserva, Hotel y Habitacion con la información obtenida
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $reservas[] = new Reserva($row['id'], $row['id_usuario'], $row['id_hotel'], $row['id_habitacion'], $row['fecha_entrada'], $row['fecha_salida']);
             $hoteles[] = new Hotel($row['id'], $row['nombre'], $row['direccion'], $row['ciudad'], $row['pais'], $row['num_habitaciones'], $row['descripcion'], $row['foto']);
             $habitaciones[] = new Habitacion($row['id'], $row['id_hotel'], $row['num_habitacion'], $row['tipo'], $row['precio'], $row['descripcion']);
         }
-        
+
         // Redirige a la página de no disponible si no hay reservas
         if (empty($reservas)) {
             header("Location: ./index.php?controller=Reservas&action=mostrarNoDisponible");
         }
-        
+
         // Retorna un array con objetos Reserva, Hotel y Habitacion correspondientes
         return array("reservas" => $reservas, "hoteles" => $hoteles, "habitaciones" => $habitaciones);
     }
