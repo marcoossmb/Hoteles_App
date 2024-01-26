@@ -127,28 +127,34 @@ class ReservasModel {
      * Redirige a la página de no disponible si no hay reservas.
      */
     public function getReservasDetalle() {
-        // Consulta SQL para obtener detalles de una reserva específica
-        $stmt = $this->pdo->prepare('SELECT * FROM reservas r JOIN hoteles h ON r.id_hotel=h.id JOIN habitaciones hab ON r.id_habitacion=hab.id WHERE r.id=' . $_GET['reserva']);
-        $stmt->execute();
+        try {
+            // Consulta SQL para obtener detalles de una reserva específica
+            $stmt = $this->pdo->prepare('SELECT * FROM reservas r JOIN hoteles h ON r.id_hotel=h.id JOIN habitaciones hab ON r.id_habitacion=hab.id WHERE r.id=' . $_GET['reserva']);
+            $stmt->execute();
 
-        // Inicializa arrays para almacenar objetos Reserva, Hotel y Habitacion
-        $reservas = [];
-        $hoteles = [];
-        $habitaciones = [];
+            // Inicializa arrays para almacenar objetos Reserva, Hotel y Habitacion
+            $reservas = [];
+            $hoteles = [];
+            $habitaciones = [];
 
-        // Recorre los resultados y crea objetos Reserva, Hotel y Habitacion con la información obtenida
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $reservas[] = new Reserva($row['id'], $row['id_usuario'], $row['id_hotel'], $row['id_habitacion'], $row['fecha_entrada'], $row['fecha_salida']);
-            $hoteles[] = new Hotel($row['id'], $row['nombre'], $row['direccion'], $row['ciudad'], $row['pais'], $row['num_habitaciones'], $row['descripcion'], $row['foto']);
-            $habitaciones[] = new Habitacion($row['id'], $row['id_hotel'], $row['num_habitacion'], $row['tipo'], $row['precio'], $row['descripcion']);
-        }
+            // Recorre los resultados y crea objetos Reserva, Hotel y Habitacion con la información obtenida
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $reservas[] = new Reserva($row['id'], $row['id_usuario'], $row['id_hotel'], $row['id_habitacion'], $row['fecha_entrada'], $row['fecha_salida']);
+                $hoteles[] = new Hotel($row['id'], $row['nombre'], $row['direccion'], $row['ciudad'], $row['pais'], $row['num_habitaciones'], $row['descripcion'], $row['foto']);
+                $habitaciones[] = new Habitacion($row['id'], $row['id_hotel'], $row['num_habitacion'], $row['tipo'], $row['precio'], $row['descripcion']);
+            }
 
-        // Redirige a la página de no disponible si no hay reservas
-        if (empty($reservas)) {
+            // Redirige a la página de no disponible si no hay reservas
+            if (empty($reservas)) {
+                header("Location: ./index.php?controller=Reservas&action=mostrarNoDisponible");
+            }
+
+            // Retorna un array con objetos Reserva, Hotel y Habitacion correspondientes
+            return array("reservas" => $reservas, "hoteles" => $hoteles, "habitaciones" => $habitaciones);
+        } catch (PDOException $e) {
+            // Manejo de la excepción: redirige a la página de no disponible
             header("Location: ./index.php?controller=Reservas&action=mostrarNoDisponible");
+            exit;
         }
-
-        // Retorna un array con objetos Reserva, Hotel y Habitacion correspondientes
-        return array("reservas" => $reservas, "hoteles" => $hoteles, "habitaciones" => $habitaciones);
     }
 }
