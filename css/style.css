@@ -89,3 +89,8 @@ th {
     background-color: #46AABA;
     border: #46AABA;
 }
+
+.btn__log:hover {
+    background-color: #51B9C4;
+    border: #51B9C4;
+}

@@ -36,6 +36,7 @@ class ReservasView {
                             <th>Habitación</th>
                             <th>Fecha Entrada</th>
                             <th>Fecha Salida</th>
+                            <th></th>                            
                         </tr>
                     </thead>
                     <tbody>
@@ -67,6 +68,7 @@ class ReservasView {
                             <th>Habitación</th>
                             <th>Fecha Entrada</th>
                             <th>Fecha Salida</th>
+                            <th></th>                            
                         </tr>
                     </thead>
                     <tbody>

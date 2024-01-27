@@ -59,7 +59,7 @@ class LoginView {
                                 </div>
                                 <div class="col-md-5 ps-0 d-none d-md-block">
                                     <div class="form-right h-100 text-white text-center pt-5">
-                                        <img class="w-75 object-fit-cover rounded" src="./assets/images/logotipo.jpeg" alt="alt"/>
+                                        <img class="w-75 object-fit-cover rounded" src="./assets/images/logotipo.jpeg" alt="">
                                     </div>
                                 </div>
                             </div>
