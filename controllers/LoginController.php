@@ -17,12 +17,7 @@ class LoginController {
     }
 
     // Procesa el login para verificar usuario
-    public function procesarLogin() {
-        
-        session_start();
-        if (!$_SESSION["nombre"]) {
-            header("Location: ./index.php?controller=Login&action=mostrar");
-        }
+    public function procesarLogin() {        
         
         // Recupera los datos del login
         $user = $_POST['usuario'];

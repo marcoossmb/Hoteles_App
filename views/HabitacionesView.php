@@ -80,12 +80,7 @@ class HabitacionesView {
                             <th>Tipo de Habitación</th>
                             <th>Descripción</th>
                             <th>Precio</th>
-                            <?php
-                            // Columna adicional para reserva (solo visible para usuarios)
-                            if ($_SESSION["rol"] == 0) {
-                                echo '<th>Acciones</th>';
-                            }
-                            ?>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -102,12 +97,11 @@ class HabitacionesView {
                                 <td><?php echo $detalle->getPrecio(); ?> €</td>
                                 <?php
                                 // Acciones de reserva (solo visible para usuarios)
-                                if ($_SESSION["rol"] == 0) {
-                                    $url_reservar = "./index.php?controller=Reservas&action=reservarHabitacion&id_hotel=" . $_GET['hotel'] . "&id_habitacion=" . $detalle->getId();
-                                    $id_capa = "miCapa_" . $index;
-                                    $fechaactual = date("Y-m-d");
-                                    $fechaManana = date("Y-m-d", strtotime($fechaactual . ' +1 day'));
-                                    echo '<td>
+                                $url_reservar = "./index.php?controller=Reservas&action=reservarHabitacion&id_hotel=" . $_GET['hotel'] . "&id_habitacion=" . $detalle->getId();
+                                $id_capa = "miCapa_" . $index;
+                                $fechaactual = date("Y-m-d");
+                                $fechaManana = date("Y-m-d", strtotime($fechaactual . ' +1 day'));
+                                echo '<td>
                                             <a data-toggle="collapse" href="#' . $id_capa . '" class="most__link">⬅️ Reservar</a>
                                             <div class="mt-3 collapse" id="' . $id_capa . '">
                                                 <form action="' . $url_reservar . '" method="POST">
@@ -123,7 +117,6 @@ class HabitacionesView {
                                                 </form>
                                             </div>
                                         </td>';
-                                }
                                 ?>
                             </tr>
                             <?php
