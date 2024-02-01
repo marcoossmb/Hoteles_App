@@ -30,6 +30,7 @@ class HotelesView {
                             <th>País</th>
                             <th>Ciudad</th>
                             <th>Habitaciones</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

@@ -17,7 +17,7 @@
             <!-- Contenido del mantenimiento -->
             <div class="d-flex align-items-center justify-content-center flex-column">
                 <!-- Enlace para volver a la página principal -->
-                <a class="header__link" href="../index.php">Volver</a>
+                <a class="header__link" href="../index.php?controller=Hoteles&action=mostrar">Volver</a>
             </div> 
         </div>
     </body>
